@@ -2,6 +2,7 @@
 import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { cn } from "~/lib/utils";
+import { readTextFile } from "~/server/actions/reader";
 
 export default function MyDropzone() {
   interface FileWithPath extends File {
@@ -16,10 +17,10 @@ export default function MyDropzone() {
 
       reader.onabort = () => console.log("file reading was aborted");
       reader.onerror = () => console.log("file reading has failed");
-      reader.onload = () => {
+      reader.onload = async () => {
         // Do whatever you want with the file contents
         const binaryStr = reader.result;
-        console.log(binaryStr);
+        console.log(await readTextFile(binaryStr as string));
       };
       reader.readAsText(file);
     }
