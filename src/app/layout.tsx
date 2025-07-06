@@ -3,7 +3,7 @@ import "~/styles/globals.css";
 import {
   ClerkProvider,
 } from '@clerk/nextjs'
-
+import { ThemeProvider } from "~/components/theme-provider"
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
 
@@ -22,10 +22,17 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geist.variable}`}>
+    <html lang="en" className={`${geist.variable}`} suppressHydrationWarning>
       <body>
         <ClerkProvider>
-          {children}
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
         </ClerkProvider>
       </body>
     </html>

@@ -1,11 +1,12 @@
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
-
-import MyDropzone from "./_components/file-reader";
+import Header from "../components/header";
+import MyDropzone from "../components/file-reader";
 
 export default async function Home() {
   return (
-      <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <main className="flex min-h-screen flex-col items-center justify-between">
+        <Header />
         <h1 className="font-bold text-4xl">Welcome to Ghost Stack!</h1>
         <p className="text-lg">
           This is a full-stack application built with Next.js, tRPC, and
