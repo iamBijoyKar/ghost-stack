@@ -3,6 +3,8 @@ import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { cn } from "~/lib/utils";
 import { readTextFile } from "~/server/actions/reader";
+import { FileUp } from "lucide-react";
+import { motion, useAnimate } from "motion/react";
 
 export default function MyDropzone() {
   interface FileWithPath extends File {
@@ -36,14 +38,20 @@ export default function MyDropzone() {
     <div
       {...getRootProps()}
       className={cn(
-        "border-2 border-dashed border-gray-300 p-6 rounded-lg text-center",
-        "hover:bg-gray-100 cursor-pointer",
+        "border-2 border-dashed border-gray-300 p-6 rounded-lg text-center flex flex-col items-center justify-center",
+        "hover:bg-secondary cursor-pointer",
         "transition-colors duration-200 ease-in-out",
+        "w-full h-full"
       )}
       aria-label="Drag and drop files here or click to select files"
     >
       <input {...getInputProps()} />
-      <p>Drag 'n' drop some files here, or click to select files</p>
+      <div
+        className={`flex flex-col items-center justify-center ${isDragActive ? "motion-translate-y-loop-25" : ""}`}
+      >
+        <FileUp className="w-12 h-12" />
+        <p className="text-sm text-muted-foreground mt-2">Drag 'n' drop some files here, <br /> or click to select files</p>
+      </div>
     </div>
   );
 }
