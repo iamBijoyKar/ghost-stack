@@ -1,0 +1,236 @@
+[
+  {
+    "label": "VsCode",
+    "value": "vscode",
+    "source": "Microsoft.VisualStudioCode",
+    "icon": "https://code.visualstudio.com/assets/images/code-stable.png"
+  },
+  {
+    "label": "Cursor",
+    "value": "cursor",
+    "source": "Anysphere.Cursor",
+    "icon": "https://cursor.so/favicon.ico"
+  },
+  {
+    "label": "Spotify",
+    "value": "spotify",
+    "source": "Spotify.Spotify",
+    "icon": "https://spotify.com/favicon.ico"
+  },
+  {
+    "label": "Discord",
+    "value": "discord",
+    "source": "Discord.Discord",
+    "icon": "https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/66e3d80db9971f10a9757c99_Symbol.svg"
+  },
+  {
+    "label": "Slack",
+    "value": "slack",
+    "source": "SlackTechnologies.Slack",
+    "icon": "https://slack.com/favicon.ico"
+  },
+  {
+    "label": "Notion",
+    "value": "notion",
+    "source": "Notion.Notion",
+    "icon": "https://img.icons8.com/glyph-neue/64/notion.png"
+  },
+  {
+    "label": "Figma",
+    "value": "figma",
+    "source": "Figma.Figma",
+    "icon": "https://img.icons8.com/color/48/figma--v1.png"
+  },
+  {
+    "label": "Chrome",
+    "value": "chrome",
+    "source": "Google.Chrome",
+    "icon": "https://img.icons8.com/color/48/chrome--v1.png"
+  },
+  {
+    "label": "Brave",
+    "value": "brave",
+    "source": "Brave.Brave",
+    "icon": "https://brave.com/favicon.ico"
+  },
+  {
+    "label": "Edge",
+    "value": "edge",
+    "source": "Microsoft.Edge",
+    "icon": "https://img.icons8.com/color/48/ms-edge-new.png"
+  },
+  {
+    "label": "Firefox",
+    "value": "firefox",
+    "source": "Mozilla.Firefox",
+    "icon": "https://cdn-icons-png.flaticon.com/128/5968/5968827.png"
+  },
+  {
+    "label": "GitHub Desktop",
+    "value": "github-desktop",
+    "source": "GitHub.GitHubDesktop",
+    "icon": "https://img.icons8.com/glyph-neue/64/github.png"
+  },
+  {
+    "label": "Postman",
+    "value": "postman",
+    "source": "Postman.Postman",
+    "icon": "https://img.icons8.com/external-tal-revivo-shadow-tal-revivo/24/external-postman-is-the-only-complete-api-development-environment-logo-shadow-tal-revivo.png"
+  },
+  {
+    "label": "Visual Studio",
+    "value": "visual-studio",
+    "source": "Microsoft.VisualStudio",
+    "icon": "https://img.icons8.com/fluency/48/visual-studio.png"
+  },
+  {
+    "label": "GitKraken",
+    "value": "gitkraken",
+    "source": "GitKraken.GitKraken",
+    "icon": "https://www.gitkraken.com/favicon.ico"
+  },
+  {
+    "label": "Zoom",
+    "value": "zoom",
+    "source": "Zoom.Zoom",
+    "icon": "https://zoom.us/favicon.ico"
+  },
+  {
+    "label": "Microsoft Teams",
+    "value": "teams",
+    "source": "Microsoft.Teams",
+    "icon": "https://img.icons8.com/color/48/microsoft-teams.png"
+  },
+  {
+    "label": "Telegram Desktop",
+    "value": "telegram-desktop",
+    "source": "Telegram.TelegramDesktop",
+    "icon": "https://img.icons8.com/color/48/telegram-app.png"
+  },
+  {
+    "label": "WhatsApp Desktop",
+    "value": "whatsapp-desktop",
+    "source": "WhatsApp.WhatsAppDesktop",
+    "icon": "https://img.icons8.com/color/48/whatsapp--v1.png"
+  },
+  {
+    "label": "OBS Studio",
+    "value": "obs-studio",
+    "source": "OBSProject.OBSStudio",
+    "icon": "https://obsproject.com/favicon.ico"
+  },
+  {
+    "label": "VLC Media Player",
+    "value": "vlc-media-player",
+    "source": "VideoLAN.VLC",
+    "icon": "https://www.videolan.org/images/favicon.ico"
+  },
+  {
+    "label": "7-Zip",
+    "value": "7-zip",
+    "source": "7-Zip.7-Zip",
+    "icon": "https://www.7-zip.org/favicon.ico"
+  },
+  {
+    "label": "WinRAR",
+    "value": "winrar",
+    "source": "WinRAR.WinRAR",
+    "icon": "https://img.icons8.com/fluency/48/winrar.png"
+  },
+  {
+    "label": "Git",
+    "value": "git",
+    "source": "Git.Git",
+    "icon": "https://git-scm.com/favicon.ico"
+  },
+  {
+    "label": "Docker Desktop",
+    "value": "docker-desktop",
+    "source": "Docker.DockerDesktop",
+    "icon": "https://www.docker.com/favicon.ico"
+  },
+  {
+    "label": "VirtualBox",
+    "value": "virtualbox",
+    "source": "Oracle.VirtualBox",
+    "icon": "https://www.virtualbox.org/favicon.ico"
+  },
+  {
+    "label": "Hyper-V Manager",
+    "value": "hyper-v-manager",
+    "source": "Microsoft.HyperVManager",
+    "icon": "https://img.icons8.com/color/48/microsoft-hyper-v.png"
+  },
+  {
+    "label": "Python",
+    "value": "python",
+    "source": "Python.Python",
+    "icon": "https://img.icons8.com/color/48/python.png"
+  },
+  {
+    "label": "Node.js",
+    "value": "nodejs",
+    "source": "Node.js.Node",
+    "icon": "https://img.icons8.com/color/48/nodejs.png"
+  },
+  {
+    "label": "Java",
+    "value": "java",
+    "source": "Oracle.Java",
+    "icon": "https://img.icons8.com/color/48/java-coffee-cup-logo--v1.png"
+  },
+  {
+    "label": "Go",
+    "value": "go",
+    "source": "Go.Go",
+    "icon": "https://go.dev/blog/go-brand/Go-Logo/SVG/Go-Logo_Blue.svg"
+  },
+  {
+    "label": "Rust",
+    "value": "rust",
+    "source": "Rust.Rust",
+    "icon": "https://img.icons8.com/color/48/rust-programming-language.png"
+  },
+  {
+    "label": "Kotlin",
+    "value": "kotlin",
+    "source": "JetBrains.Kotlin",
+    "icon": "https://img.icons8.com/color/48/kotlin.png"
+  },
+  {
+    "label": "Ollama",
+    "value": "ollama",
+    "source": "Ollama.Ollama",
+    "icon": "https://ollama.com/public/ollama.png"
+  },
+  {
+    "label": "CMake",
+    "value": "cmake",
+    "source": "Kitware.CMake",
+    "icon": "https://img.icons8.com/external-tal-revivo-color-tal-revivo/24/external-cmake-a-cross-platform-free-and-open-source-software-tool-logo-color-tal-revivo.png"
+  },
+  {
+    "label": "C#",
+    "value": "csharp",
+    "source": "Microsoft.CSharp",
+    "icon": "https://img.icons8.com/color/48/c-sharp-logo.png"
+  },
+  {
+    "label": "PHP",
+    "value": "php",
+    "source": "PHP.PHP",
+    "icon": "https://img.icons8.com/color/48/php.png"
+  },
+  {
+    "label": "Ruby",
+    "value": "ruby",
+    "source": "Ruby.Ruby",
+    "icon": "https://img.icons8.com/color/48/ruby-programming-language.png"
+  },
+  {
+    "label": "Dart",
+    "value": "dart",
+    "source": "Google.Dart",
+    "icon": "https://img.icons8.com/color/48/dart.png"
+  }
+]

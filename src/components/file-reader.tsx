@@ -6,7 +6,11 @@ import { readTextFile } from "~/server/actions/reader";
 import { FileUp } from "lucide-react";
 import { motion, useAnimate } from "motion/react";
 
-export default function MyDropzone() {
+type MyDropzoneProps = {
+  setAppData: (data: any[]) => void;
+};
+
+export default function MyDropzone({ setAppData }: MyDropzoneProps) {
   interface FileWithPath extends File {
     path?: string;
   }
@@ -22,7 +26,9 @@ export default function MyDropzone() {
       reader.onload = async () => {
         // Do whatever you want with the file contents
         const binaryStr = reader.result;
-        console.log(await readTextFile(binaryStr as string));
+        // console.log(await readTextFile(binaryStr as string));
+        const appData = await readTextFile(binaryStr as string);
+        setAppData(appData);
       };
       reader.readAsText(file);
     }
@@ -38,10 +44,10 @@ export default function MyDropzone() {
     <div
       {...getRootProps()}
       className={cn(
-        "border-2 border-dashed border-gray-300 p-6 rounded-lg text-center flex flex-col items-center justify-center",
+        "flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 p-6 text-center",
         "hover:bg-secondary cursor-pointer",
         "transition-colors duration-200 ease-in-out",
-        "w-full h-full"
+        "h-full w-full",
       )}
       aria-label="Drag and drop files here or click to select files"
     >
@@ -49,8 +55,10 @@ export default function MyDropzone() {
       <div
         className={`flex flex-col items-center justify-center ${isDragActive ? "motion-translate-y-loop-25" : ""}`}
       >
-        <FileUp className="w-12 h-12" />
-        <p className="text-sm text-muted-foreground mt-2">Drag 'n' drop some files here, <br /> or click to select files</p>
+        <FileUp className="h-12 w-12" />
+        <p className="text-muted-foreground mt-2 text-sm">
+          Drag 'n' drop some files here, <br /> or click to select files
+        </p>
       </div>
     </div>
   );

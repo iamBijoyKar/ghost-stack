@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import {
   HoverCard,
@@ -16,6 +16,7 @@ import {
   MultiSelectorList,
   MultiSelectorItem,
 } from "~/components/ui/multi-select";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import {
   Table,
   TableBody,
@@ -25,6 +26,7 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
+import { ScrollArea } from "~/components/ui/scroll-area";
 import { Separator } from "~/components/ui/separator";
 import {
   Layers2,
@@ -32,17 +34,31 @@ import {
   Terminal,
   ChevronRight,
   CopyPlus,
+  Trash2,
+  LayoutGrid as LayoutGridIcon,
 } from "lucide-react";
 import MyDropzone from "../components/file-reader";
+import data from "~/data/data.json";
 
 export default function CreateStack() {
   const [activeTab, setActiveTab] = useState("step1");
-  const options = [
-    { label: "React", value: "react" },
-    { label: "Vue", value: "vue" },
-    { label: "Svelte", value: "svelte" },
-  ];
   const [value, setValue] = useState<string[]>([]);
+  const [appData, setAppData] = useState<any[]>([]);
+  const [selectedApps, setSelectedApps] = useState<any[]>([]);
+
+  const handleValueChange = (newValue: string[]) => {
+    setValue(newValue);
+    const selectedApps = newValue.map((val) => {
+      const item = Object.values(data).find((item) => item.value === val);
+      return {
+        name: item?.label || "Unknown",
+        version: "latest",
+        icon: item?.icon || "",
+        source: item?.source || "Unknown",
+      };
+    });
+    setSelectedApps(selectedApps);
+  };
 
   return (
     <Tabs
@@ -128,7 +144,7 @@ export default function CreateStack() {
             Upload your winget text file to parse the applications installed on
             your system.
           </p>
-          <MyDropzone />
+          <MyDropzone setAppData={setAppData} />
           <div className="mt-4 flex items-center justify-end gap-2">
             <Button variant="outline">Skip</Button>
             <Button onClick={() => setActiveTab("step3")}>Next</Button>
@@ -137,52 +153,108 @@ export default function CreateStack() {
       </TabsContent>
       <TabsContent value="step3">
         <div className="motion-preset-fade-sm flex w-full flex-col items-center justify-center gap-2">
-          <MultiSelector values={value} onValuesChange={setValue} loop={false}>
+          <MultiSelector
+            values={value}
+            onValuesChange={handleValueChange}
+            loop={false}
+            className=""
+          >
             <MultiSelectorTrigger>
               <MultiSelectorInput placeholder="Select your framework" />
             </MultiSelectorTrigger>
             <MultiSelectorContent>
-              <MultiSelectorList>
-                {options.map((option, i) => (
-                  <MultiSelectorItem key={i} value={option.value}>
-                    {option.label}
+              <MultiSelectorList className="h-[200px]">
+                {data.map((option, i) => (
+                  <MultiSelectorItem
+                    key={i}
+                    value={option.value}
+                    data-source={option.source}
+                  >
+                    <div className="flex items-center gap-2">
+                      <Avatar className="h-5 w-5 rounded-none">
+                        <AvatarImage src={option.icon} alt={option.label} />
+                      </Avatar>
+                      <span>{option.label}</span>
+                    </div>
                   </MultiSelectorItem>
                 ))}
               </MultiSelectorList>
             </MultiSelectorContent>
           </MultiSelector>
           {/* table  */}
-          <Table>
-            <TableCaption>A list of your recent invoices.</TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[100px]">Invoice</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Method</TableHead>
-                <TableHead className="text-right">Amount</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              <TableRow>
-                <TableCell className="font-medium">INV001</TableCell>
-                <TableCell>Paid</TableCell>
-                <TableCell>Credit Card</TableCell>
-                <TableCell className="text-right">$250.00</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-medium">INV001</TableCell>
-                <TableCell>Paid</TableCell>
-                <TableCell>Credit Card</TableCell>
-                <TableCell className="text-right">$250.00</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-medium">INV001</TableCell>
-                <TableCell>Paid</TableCell>
-                <TableCell>Credit Card</TableCell>
-                <TableCell className="text-right">$250.00</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
+          <ScrollArea className="mt-4 h-[300px] w-full">
+            <Table>
+              <TableCaption>A list of your recent invoices.</TableCaption>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-[100px]">Icon</TableHead>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Version</TableHead>
+                  <TableHead className="">Action</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {selectedApps.map((app, index) => (
+                  <TableRow key={index}>
+                    <TableCell className="font-medium">
+                      <Avatar className="h-5 w-5 rounded-none">
+                        <AvatarImage src={app.icon} alt={app.name} />
+                        <AvatarFallback>
+                          <LayoutGridIcon className="h-4 w-4" />
+                        </AvatarFallback>
+                      </Avatar>
+                    </TableCell>
+                    <TableCell className="max-w-[200px] truncate">
+                      {app.name}
+                    </TableCell>
+                    <TableCell className="truncate">{app.version}</TableCell>
+                    <TableCell>
+                      <Button
+                        variant="ghost"
+                        type="button"
+                        size="icon"
+                        className="p-1 hover:text-red-500"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+                {appData.map((app, index) => (
+                  <TableRow key={index}>
+                    <TableCell className="font-medium">
+                      <Avatar className="h-5 w-5 rounded-none">
+                        <AvatarImage src={app.icon} alt={app.name} />
+                        <AvatarFallback>
+                          <LayoutGridIcon className="h-4 w-4" />
+                        </AvatarFallback>
+                      </Avatar>
+                    </TableCell>
+                    <TableCell className="max-w-[200px] truncate">
+                      {app.name}
+                    </TableCell>
+                    <TableCell className="truncate">{app.version}</TableCell>
+                    <TableCell>
+                      <Button
+                        variant="ghost"
+                        type="button"
+                        size="icon"
+                        className="p-1 hover:text-red-500"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </ScrollArea>
+        </div>
+        <div className="mt-4 flex items-center justify-end gap-2">
+          <Button variant="outline" onClick={() => setActiveTab("step2")}>
+            Prev
+          </Button>
+          <Button onClick={() => setActiveTab("step3")}>Next</Button>
         </div>
       </TabsContent>
     </Tabs>
