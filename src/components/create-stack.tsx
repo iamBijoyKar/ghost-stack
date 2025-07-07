@@ -36,15 +36,20 @@ import {
   CopyPlus,
   Trash2,
   LayoutGrid as LayoutGridIcon,
+  HardDriveDownload,
 } from "lucide-react";
 import MyDropzone from "../components/file-reader";
+import { CodeBlock } from "./ui/code";
 import data from "~/data/data.json";
+import Link from "next/link";
 
 export default function CreateStack() {
   const [activeTab, setActiveTab] = useState("step1");
   const [value, setValue] = useState<string[]>([]);
   const [appData, setAppData] = useState<any[]>([]);
   const [selectedApps, setSelectedApps] = useState<any[]>([]);
+  const [installCommand, setInstallCommand] = useState<string>("");
+  const [batUrl, setBatUrl] = useState<string>("");
 
   const handleValueChange = (newValue: string[]) => {
     setValue(newValue);
@@ -59,6 +64,23 @@ export default function CreateStack() {
     });
     setSelectedApps(selectedApps);
   };
+
+  const handleDownloadBatFile = () => {
+    const blob = new Blob([installCommand], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    setBatUrl(url);
+  };
+
+  useEffect(() => {
+    let command = `winget install`;
+    appData.forEach((app) => {
+      command += ` ${app.sourceId}`;
+    });
+    selectedApps.forEach((app) => {
+      command += ` ${app.source}`;
+    });
+    setInstallCommand(command);
+  }, [appData, selectedApps]);
 
   return (
     <Tabs
@@ -88,6 +110,14 @@ export default function CreateStack() {
           <div className="flex items-center gap-1">
             <ListTodo className="h-5 w-5" />
             <span className="">Step 3</span>
+          </div>
+        </TabsTrigger>
+        {/* Step 4 */}
+        <TabsTrigger value="step4">
+          {" "}
+          <div className="flex items-center gap-1">
+            <HardDriveDownload className="h-5 w-5" />
+            <span className="">Step 4</span>
           </div>
         </TabsTrigger>
       </TabsList>
@@ -146,7 +176,9 @@ export default function CreateStack() {
           </p>
           <MyDropzone setAppData={setAppData} />
           <div className="mt-4 flex items-center justify-end gap-2">
-            <Button variant="outline">Skip</Button>
+            <Button variant="outline" onClick={() => setActiveTab("step1")}>
+              Prev
+            </Button>
             <Button onClick={() => setActiveTab("step3")}>Next</Button>
           </div>
         </div>
@@ -254,7 +286,36 @@ export default function CreateStack() {
           <Button variant="outline" onClick={() => setActiveTab("step2")}>
             Prev
           </Button>
-          <Button onClick={() => setActiveTab("step3")}>Next</Button>
+          <Button onClick={() => setActiveTab("step4")}>Next</Button>
+        </div>
+      </TabsContent>
+      <TabsContent value="step4">
+        <div className="motion-preset-fade-sm flex w-full flex-col items-center justify-center gap-2">
+          <p className="text-muted-foreground text-sm">
+            Review your selected applications and click on the "Create Stack"
+            button to save your stack in cloud storage.
+          </p>
+          <CodeBlock
+            code={`${installCommand} 
+          `}
+            className="overflow-hidden"
+          />
+          <p className="text-muted-foreground mt-2 text-sm">
+            This command will install the selected applications on your system.
+            Otherwise download the bat file and run it.
+          </p>
+          <Link href={batUrl} download="install.bat">
+            <Button className="mt-2">
+              <HardDriveDownload className="mr-2 h-4 w-4" />
+              Download Batch File
+            </Button>
+          </Link>
+          <div className="mt-4 flex w-full justify-end gap-2">
+            <Button variant="outline" onClick={() => setActiveTab("step3")}>
+              Back
+            </Button>
+            <Button>Create Stack</Button>
+          </div>
         </div>
       </TabsContent>
     </Tabs>
