@@ -24,7 +24,7 @@ export function parseTextFile(content: string) {
     parsedData.push({
       name: lineData[0]!,
       sourceId: lineData[1]!,
-      version: lineData[2]!,
+      version: lineData[2],
       icon: item[0]?.icon,
     });
   }

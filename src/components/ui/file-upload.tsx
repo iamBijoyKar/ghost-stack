@@ -187,7 +187,7 @@ export const FileUploader = forwardRef<
               );
               break;
             }
-            if (error && error.message) {
+            if (error?.message) {
               toast.error(error.message);
               break;
             }

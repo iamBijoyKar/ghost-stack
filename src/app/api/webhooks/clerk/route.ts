@@ -1,6 +1,6 @@
 import { headers } from "next/headers";
 import { Webhook, type WebhookRequiredHeaders } from "svix";
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { users } from "~/server/db/schema";
 import { db } from "~/server/db";
 import { eq } from "drizzle-orm";
@@ -14,7 +14,7 @@ interface ClerkUserEventData {
   email_addresses?: Array<{
     email_address: string;
     id: string;
-    [key: string]: any;
+    [key: string]: unknown;
   }>;
   image_url?: string;
   // Add other relevant user properties you expect from Clerk
@@ -25,7 +25,7 @@ interface ClerkUserEventData {
 interface ClerkWebhookEvent {
   data: ClerkUserEventData;
   object: "event";
-  type: "user.created" | "user.updated" | "user.deleted" | string; // Allow other event types
+  type: "user.created" | "user.updated" | "user.deleted";
 }
 
 // You'll want to store this in your environment variables
@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
   }
 
   // Create a new Svix instance with your secret.
-  const wh = new Webhook(WEBHOOK_SECRET as string);
+  const wh = new Webhook(WEBHOOK_SECRET!);
 
   let evt: ClerkWebhookEvent;
 
@@ -73,9 +73,9 @@ export async function POST(req: NextRequest) {
       "svix-timestamp": svix_timestamp,
       "svix-signature": svix_signature,
     } as WebhookRequiredHeaders) as ClerkWebhookEvent; // Cast to your defined event type
-  } catch (err: any) {
-    console.error("Error verifying webhook:", err.message);
-    return new Response(err.message, {
+  } catch (err: unknown) {
+    console.error("Error verifying webhook:", (err as Error).message);
+    return new Response((err as Error).message, {
       status: 400,
     });
   }
@@ -135,7 +135,7 @@ export async function POST(req: NextRequest) {
             (emailObj: {
               id: string;
               email_address: string;
-              [key: string]: any;
+              [key: string]: unknown;
             }) => emailObj.id === eventData.primary_email_address_id,
           )?.email_address || eventData.email_addresses?.[0]?.email_address;
 
@@ -169,17 +169,20 @@ export async function POST(req: NextRequest) {
 
         break;
       default:
-        console.log(`Received unhandled event type: ${eventType}`);
+        console.log(`Received unhandled event type: ${eventType as string}`);
     }
 
     // Acknowledge receipt of the webhook
     return new Response(`User created ${eventType}`, {
       status: 200,
     });
-  } catch (error: any) {
-    console.error(`Error handling ${eventType}:`, error.message);
-    return new Response(`Error handling ${eventType}: ${error.message}`, {
-      status: 500,
-    });
+  } catch (error: unknown) {
+    console.error(`Error handling ${eventType}:`, (error as Error).message);
+    return new Response(
+      `Error handling ${eventType}: ${(error as Error).message}`,
+      {
+        status: 500,
+      },
+    );
   }
 }
