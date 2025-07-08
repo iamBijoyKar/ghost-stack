@@ -1,7 +1,7 @@
 // Example model schema from the Drizzle docs
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
-import { sql } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import { index, pgTableCreator } from "drizzle-orm/pg-core";
 
 /**
@@ -32,6 +32,10 @@ export const users = createTable(
   (t) => [index("user_idx").on(t.name)],
 );
 
+export const userRelations = relations(users, ({ many }) => ({
+  stacks: many(stacks),
+}));
+
 export const stacks = createTable(
   "stack",
   (d) => ({
@@ -50,3 +54,10 @@ export const stacks = createTable(
   }),
   (t) => [index("stack_idx").on(t.name)],
 );
+
+export const stackRelations = relations(stacks, ({ one }) => ({
+  author: one(users, {
+    fields: [stacks.userId],
+    references: [users.id],
+  }),
+}));
