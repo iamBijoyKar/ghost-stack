@@ -10,13 +10,13 @@ import {
   MobileNavToggle,
   MobileNavMenu,
 } from "~/components/ui/resizeable-navbar";
+import { SignIn, SignedIn, SignedOut } from "@clerk/nextjs";
 import { Logo } from "./logo";
 import { useState } from "react";
 import * as React from "react";
-import { useTheme } from "next-themes";
+import GlareHover from "./ui/glare";
 
 export default function Header() {
-  const { setTheme } = useTheme();
   const navItems = [
     {
       name: "Features",
@@ -39,8 +39,12 @@ export default function Header() {
         <Logo />
         <NavItems items={navItems} />
         <div className="flex items-center gap-4">
-          <NavbarButton variant="secondary">Login</NavbarButton>
-          <NavbarButton variant="primary">Book a call</NavbarButton>
+          <NavbarButton href="/login" variant="secondary">
+            Login
+          </NavbarButton>
+          <NavbarButton href="/sign-up" variant="primary">
+            Sign Up
+          </NavbarButton>
         </div>
       </NavBody>
 
@@ -70,6 +74,7 @@ export default function Header() {
           ))}
           <div className="flex w-full flex-col gap-4">
             <NavbarButton
+              href="/login"
               onClick={() => setIsMobileMenuOpen(false)}
               variant="primary"
               className="w-full"
@@ -77,11 +82,12 @@ export default function Header() {
               Login
             </NavbarButton>
             <NavbarButton
+              href="/sign-up"
               onClick={() => setIsMobileMenuOpen(false)}
               variant="primary"
               className="w-full"
             >
-              Book a call
+              Sign Up
             </NavbarButton>
           </div>
         </MobileNavMenu>

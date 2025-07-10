@@ -1,9 +1,6 @@
 import "~/styles/globals.css";
 
-import {
-  ClerkProvider,
-} from '@clerk/nextjs'
-import { ThemeProvider } from "~/components/theme-provider"
+import { ClerkProvider } from "@clerk/nextjs";
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
 
@@ -24,16 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geist.variable}`} suppressHydrationWarning>
       <body>
-        <ClerkProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-          </ThemeProvider>
-        </ClerkProvider>
+        <ClerkProvider>{children}</ClerkProvider>
       </body>
     </html>
   );
