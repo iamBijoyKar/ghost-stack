@@ -38,6 +38,7 @@ import {
   LayoutGrid as LayoutGridIcon,
   HardDriveDownload,
 } from "lucide-react";
+import { toast } from "sonner";
 import MyDropzone from "../components/file-reader";
 import { CodeBlock } from "./ui/code";
 import data from "~/data/data.json";
@@ -73,11 +74,13 @@ export default function CreateStack() {
   };
 
   const handleCreateStack = async () => {
-    const result = await createStack(selectedApps);
+    const result = await createStack(selectedApps.concat(appData));
     if (result.success) {
       // Handle successful stack creation
+      toast(result.message);
     } else {
       // Handle stack creation error
+      toast(result.message);
     }
   };
 
