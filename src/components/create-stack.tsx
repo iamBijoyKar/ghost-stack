@@ -42,6 +42,7 @@ import MyDropzone from "../components/file-reader";
 import { CodeBlock } from "./ui/code";
 import data from "~/data/data.json";
 import Link from "next/link";
+import { createStack } from "~/server/actions/stack";
 
 export default function CreateStack() {
   const [activeTab, setActiveTab] = useState("step1");
@@ -69,6 +70,15 @@ export default function CreateStack() {
     const blob = new Blob([installCommand], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
     setBatUrl(url);
+  };
+
+  const handleCreateStack = async () => {
+    const result = await createStack(selectedApps);
+    if (result.success) {
+      // Handle successful stack creation
+    } else {
+      // Handle stack creation error
+    }
   };
 
   useEffect(() => {
@@ -314,7 +324,7 @@ export default function CreateStack() {
             <Button variant="outline" onClick={() => setActiveTab("step3")}>
               Back
             </Button>
-            <Button>Create Stack</Button>
+            <Button onClick={handleCreateStack}>Create Stack</Button>
           </div>
         </div>
       </TabsContent>

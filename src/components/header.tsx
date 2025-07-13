@@ -10,11 +10,11 @@ import {
   MobileNavToggle,
   MobileNavMenu,
 } from "~/components/ui/resizeable-navbar";
-import { SignIn, SignedIn, SignedOut } from "@clerk/nextjs";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
+import Link from "next/link";
 import { Logo } from "./logo";
 import { useState } from "react";
 import * as React from "react";
-import GlareHover from "./ui/glare";
 
 export default function Header() {
   const navItems = [
@@ -39,19 +39,30 @@ export default function Header() {
         <Logo />
         <NavItems items={navItems} />
         <div className="flex items-center gap-4">
-          <NavbarButton href="/login" variant="secondary">
-            Login
-          </NavbarButton>
-          <NavbarButton href="/sign-up" variant="primary">
-            Sign Up
-          </NavbarButton>
+          <SignedOut>
+            <NavbarButton href="/login" variant="secondary">
+              Login
+            </NavbarButton>
+            <NavbarButton href="/sign-up" variant="primary">
+              Get Started
+            </NavbarButton>
+          </SignedOut>
+          <SignedIn>
+            <NavbarButton
+              href="/dashboard"
+              variant="primary"
+              className="flex items-center gap-2"
+            >
+              Dashboard
+            </NavbarButton>
+          </SignedIn>
         </div>
       </NavBody>
 
       {/* Mobile Navigation */}
       <MobileNav>
         <MobileNavHeader>
-          <NavbarLogo />
+          <Logo />
           <MobileNavToggle
             isOpen={isMobileMenuOpen}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

@@ -51,6 +51,10 @@ export const stacks = createTable(
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
     updatedAt: d.timestamp({ withTimezone: true }).$onUpdate(() => new Date()),
+    stack: d
+      .jsonb("stack")
+      .notNull()
+      .$default(() => ({})),
   }),
   (t) => [index("stack_idx").on(t.name)],
 );
