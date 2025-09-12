@@ -78,6 +78,8 @@ export default function CreateStack() {
     if (result.success) {
       // Handle successful stack creation
       toast(result.message);
+      // Redirect to dashboard after successful creation
+      window.location.href = "/dashboard";
     } else {
       // Handle stack creation error
       toast(result.message);
