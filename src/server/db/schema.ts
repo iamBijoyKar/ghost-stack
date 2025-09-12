@@ -45,7 +45,7 @@ export const stacks = createTable(
       .default(sql`gen_random_uuid()`),
     name: d.varchar({ length: 256 }).notNull(),
     description: d.text().$default(() => ""),
-    userId: d.uuid("user_id").notNull(),
+    userId: d.text("user_id").notNull(),
     createdAt: d
       .timestamp({ withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
